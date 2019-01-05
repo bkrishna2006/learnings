@@ -1,0 +1,135 @@
+Introduction to DataScience
+
+1.	Components of Data Science
+	a.	Probability & Statistics
+	b.	Linear Algebra
+	c.	Computer Science
+	d.	Domain knowledge
+	e.	Machine Learning
+2.	In data science, while solving a given business problem, an appropriate statistical computing technique may be used.
+3.	These algorithms while working on the data, may either use iterative methods or linear algebra techniques for computation. 
+4.	Linear Algebra works as a computational engine for most of the data science problems because of its performance advantages over iterative methods
+5.	Machine Learning types
+	a.	Supervised    -              Like predictions based on historical events
+	b.	Unsupervised  -              Predictions with data that has no history
+	c.	Semi-supervised   -          Between a and b
+	d.	Reinforcement learning -     Algorithm based that seeks which trial and error action yields the best reward.
+6.	Supervised M/C learning steps -
+	a.	A machine is trained with known data
+	b.	Machine is exposed to unknown data and is asked to infer from it.
+	c.	Model is evaluated for accuracy
+7.	Unsupervised M/C Learning steps – 
+	a.	Fix some variables based on which the m/c will classify the data.
+	b.	Machine clusters data based on known and unknown variables
+	c.	Eg. Fruits with same colors (  Unsupervised learning is also known as Clustering)
+8.	Semi-supervised M/C Learning steps – 
+	a.	Train the model with labeled data alone
+	b.	Use it to probabilistically classify the unlabeled data
+	c.	Use all the data to train the model
+	d.	Iterate b and c till there is convergence.
+9.	Correct examples of supervised learning
+	a.	Handwriting recognition
+	b.	House price prediction
+	c.	Pattern recognition
+10.	Correct examples of un-supervised learning
+	a.	Webpage classification
+	b.	Google news clustering
+11.	Correct examples of semi-supervised learning
+	a.	Text processing
+	b.	Video indexing
+	c.	Bio-informatics
+	d.	Webpage classification
+	e.	News classification
+12.	Correct example of reinforcement learning (learn from trial and error mostly)
+	a.	A gazelle calf struggling to stand on it’s feet at birth and running at 20 miles per hour in the next half an hour.
+13.	Some famous machine learning algorithms
+	a.	Supervised Learning
+		i.	Linear Regression
+		ii.	Logistic regression
+		iii.Naïve Bayes
+		iv.	K-Nearest Neighbors
+		v.	Decision trees
+		vi.	Random forests
+		vii.Support vector machines
+	b.	Unsupervised Learning
+		i.	Clustering 
+		1.	K-means
+		ii.	Dimensionality reduction
+		1.	Principal component Analysis
+		iii.Neural networks
+	c.	Semi-supervised learning
+		i.	Graph-based methods
+		ii.	Generative models
+		iii.Low-density separation
+		iv.	Heuristic approaches
+	d.	Reinforcement learning
+		i.	Markov decision process
+		ii.	Monte Carlo methods
+		iii.Temporal difference Learning
+
+14.	To solve a given business problem, various blocks of the Data Science stack are tightly coupled with each other 
+	a.	Core algorithms need to be written in some programming language for implementation.
+	b.	Most algorithms use the basic concepts of linear algebra.
+	c.	Statistical computations need to be done on the given data.
+	d.	Available data in structured, un-structured and semi-structured form need to be managed through various data management systems.  
+
+15.	Computer Science provides us with the necessary programming languages, database management systems, statistical analysis and machine tools.
+
+16.	Data Science model building –In this step, we use statistics and machine learning to extract useful insights from the data in order to achieve our goals. 
+The most common data science modeling tasks are as follows:
+	a.	Classification: Deciding if something belongs to  one category or another
+	b.	Scoring: Predicting or estimating a numeric value, such as a price or probability
+	c.	Ranking: Learning to order items by preferences
+	d.	Clustering: Grouping similar items based on certain parameters
+	e.	Finding relations: Finding correlations or potential causes of effects seen in the data
+	f.	Characterization: Very general plotting and report generation from data
+
+17.	3 popular modelling techniques - Classification, Clustering and Regression models
+
+18.	To execute a successful data science project, we need to make sure we have:
+	a.	a clear, verifiable and quantifiable goal
+	b.	set realistic expectations for all stakeholders
+	c.	an unbiased data set covering examples that are sufficient to represent the entire data
+	d.	the right model based on the business scenario
+	e.	correctly represented and deployed the model in order to meet the pre-defined goal
+
+19.	Top 10 use cases of Data Science
+	a.	Churn Prediction
+	b.	Sentiment Analysis
+	c.	Online Advertisement
+	d.	Recommendations
+	e.	Truth and Veracity
+	f.	News Aggregation
+	g.	Scalability
+	h.	Content discovery/search
+	i.	Intelligent learning
+	j.	Personalized Medicine.
+
+20.	Summary - In this course, we have explored and learnt the following:
+	a.	Different types of digital data
+	b.	How can we align the data methodically to our business advantage
+	c.	What is Data Science?
+	d.	Different components of data science stack
+	e.	Introduction to Probability & Statistics, Linear Algebra, Machine Learning and Computer Science tools and packages.
+	f.	Data science project life cycle
+	g.	Characteristics of a successful data science project
+	h.	Top 10 use cases of data science
+	i.	Global challenges that data science may solve
+
+References
+•	http://www.wolfram.com/
+•	https://en.wikipedia.org/wiki/Data_science
+•	https://en.wikipedia.org/wiki/Statistics
+•	https://en.wikipedia.org/wiki/Probability
+•	http://openclassroom.stanford.edu/MainFolder/CoursePage.php?course=MachineLearning
+•	https://en.wikipedia.org/wiki/Machine_learning
+•	https://www.r-project.org/
+•	https://cran.r-project.org/
+•	http://www.nist.gov/
+•	http://hortonworks.com/
+•	www.techtarget.com
+•	http://www.businessdictionary.com/
+•	Think Stats - Probability and Statistics for Programmers” by Allen B. Downey, Green Tea Press, Needham, Massachusetts
+•	http://robotics.stanford.edu/~ronnyk/glossary.html
+•	Reinforcement Learning - An Introduction, Richard S. Sutton and Andrew G. Barto, A Bradford Book. The MIT Press, Cambridge, Massachusetts, London, England
+•	Practical Data Science with R by NINA ZUMEL, JOHN MOUNT, MANNING SHELTER ISLAND
