@@ -1,0 +1,82 @@
+
+def myPreProcessing(t_uploadLoc,t_myRawFile,t_myEncoder):
+
+    import g
+    import preProcessingScripts
+    import saveNLoadObjects
+    
+    #Read the file
+    myCleanFile = preProcessingScripts.myReadFile(t_uploadLoc,t_myRawFile,t_myEncoder)
+#    myCleanFile = preProcessingScripts.myReadFile(g.rawFolder,main.myRawFile,g.myEncoder)
+    
+    #Convert contents to lowercase
+#    myCleanFile = preProcessingScripts.myConvToLower(myCleanFile)
+    
+    #Remove numbers
+    myCleanFile = preProcessingScripts.myRemNbrs(myCleanFile)
+    
+    #Remove Newline characters - '\n'
+    myCleanFile = preProcessingScripts.myReplPatterns(myCleanFile,'\n','')
+    
+    #Replacing non-ASCII charactors with space
+    myCleanFile = preProcessingScripts.myRemNonASCII(myCleanFile,g.nonASCIILookup,g.refFolder)
+    
+    #Remove Symbols
+    myCleanFile = preProcessingScripts.myRemSymb(myCleanFile,g.symbolsLookup,g.refFolder)
+    
+    #Removing English stopwords using NLTK...
+#    myCleanFile = preProcessingScripts.myRemStopWords(myCleanFile)
+    
+    #Replace contracted words with expanded equivalents for example - "won't" with "would not"
+    myCleanFile = preProcessingScripts.myReplContr(myCleanFile,g.contrLookup,g.refFolder)
+    
+    #Removing Censored words
+    myCleanFile = preProcessingScripts.myRemProfaneWords(myCleanFile,g.swearWordsLookup,g.refFolder)
+    
+    #Removing single letter words other than 'a' and 'i'
+    myCleanFile = preProcessingScripts.myReplTinyWords(myCleanFile)
+    
+    #Remove extra spaces between words and compact the sentences
+    myCleanFile = preProcessingScripts.myRemoveExtraSpaces(myCleanFile)
+
+
+    #Lemmatizing using NLTK...  PreRequiste is nltk.download('wordnet') which is a one time activity
+    myCleanFile = preProcessingScripts.myLemmatize(myCleanFile)
+
+    '''
+    #  Shall not do stemming ....    
+    #Stemming using NLTK...
+    myCleanFile = preProcessingScripts.myStemming(myCleanFile)
+    '''    
+    #Sentence Tokenize using NLTK...
+    mySentenceTokens = preProcessingScripts.mySentTokenize(myCleanFile)
+    '''   
+    #Replace fullstops - "." to " ".... (pattern left over by previous cleansing)
+    myCleanFile = preProcessingScripts.myReplPatterns(myCleanFile,"."," ")
+    '''   
+    #Word Tokenize using NLTK...
+    myWordTokens = preProcessingScripts.myWordTokenize(myCleanFile)
+    
+    #Creating N-Grams using NLTK...
+    myNgrams = preProcessingScripts.myNgramsCreate(myWordTokens)
+    
+    #Converting to Dataframe
+    myWordsDF = preProcessingScripts.myConvertToDF(myWordTokens)
+    
+    #Converting to Dataframe
+    mySentenceDF = preProcessingScripts.myConvertToDF(mySentenceTokens)
+    
+    #Removing low frequency words (less than minimum_count defined in g)
+#    myCleanFile = preProcessingScripts.myRemLowFreqWords(mySentenceTokens,g.minimum_count)
+
+    #Removing low frequency words and creating sentence and word lists
+    mySentenceList, myDocumentList = preProcessingScripts.myCreateLists(mySentenceTokens,myCleanFile,g.minimum_count)
+
+    #Save the objects to disk 
+    saveNLoadObjects.mySaveObjects(myCleanFile,myWordTokens,mySentenceTokens,myWordsDF, mySentenceDF,mySentenceList,myDocumentList)
+#    preProcessingScripts.myPickleDump(myCleanFile,g.genFolder)
+    
+    import time
+    print("Preprocessing of upload corpora completed...Cleaned file objects pickled to genData folder","\n")
+    time.sleep(g.sleeptime)
+    return mySentenceList, myDocumentList
