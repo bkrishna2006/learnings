@@ -1,0 +1,32 @@
+print("Configuring parameters for this application...",'\n') 
+import datetime
+# Defining and Initializing log variables...
+mainPgmStart = datetime.datetime.now()
+mainPgmEnd = datetime.datetime.now()
+mainPgmExecTime = datetime.datetime.now()
+iteration = 0
+
+contrLookup = "Contractions.txt"
+symbolsLookup = "Symbols.txt"
+nonASCIILookup = "NonASCII.txt"
+swearWordsLookup = "swearWords.txt"
+gloveVectLookup = "glove.6B.200d.txt"
+W2VModelLookup = "W2VModelWV_trained.bin" # Generic trained
+myW2VModelLookup = "myW2VModelWV_trained.bin" # Generic trained retrained with specific dataset
+Text8Corpus = "text8"
+nbrFeatures = 200   # for feature Vector creation 
+wordLimit = 60000 # for feature Vector creation
+sleeptime = 0.5
+myEncoder = "UTF-8"
+minimum_count = 2   # used to specify the minimum frequency of words to be considered for Word2Vec operations
+
+projDir = "D:/FlaskApps/TxtSmry"
+
+rawFolder = projDir + "/data/raw"
+trainFolder = projDir + "/data/train"
+testFolder = projDir + "/data/test"
+validationFolder = projDir + "/data/validation"
+modelFolder = projDir + "/deploy_model"
+refFolder = projDir + "/refData"
+genFolder = projDir + "/genData"
+logFolder = projDir + "/logData"
