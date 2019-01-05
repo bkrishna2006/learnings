@@ -1,0 +1,42 @@
+############   Create a folder structure for the Python Project ##########
+
+#     Note:  Use this program to create a standard folder structure for your NLP project
+#            ONLY change required is to update the name of the Project's main folder --> projDir.
+
+
+projDir = "D:/FlaskApps/FAQ1"
+
+dataFolder = projDir + "/data"
+rawFolder = projDir + "/data/raw"
+trainFolder = projDir + "/data/train"
+testFolder = projDir + "/data/test"
+validationFolder = projDir + "/data/validation"
+modelFolder = projDir + "/deploy_model"
+refFolder = projDir + "/refData"
+genFolder = projDir + "/genData"
+logFolder = projDir + "/logData"
+staticFolder = projDir + "/static"
+templatesFolder = projDir + "/templates"
+
+import os
+
+myList = [dataFolder,rawFolder,trainFolder,testFolder,validationFolder,
+          modelFolder,refFolder,genFolder,logFolder,staticFolder,templatesFolder]
+
+try:
+    os.mkdir(projDir)
+    print("Created the Project Main folder -", projDir, "\n")
+    for i in range(0,len(myList)): 
+        try:
+            os.mkdir(myList[i])
+            print("Succesfully created the folder -", myList[i],"\n")
+        except FileExistsError:
+            print("Folder",myList[i]," already exists...","\n")
+except FileExistsError:
+    print("Project Main folder already exists; Checking sub folders..-", projDir, "\n")
+    for i in range(0,len(myList)): 
+        try:
+            os.mkdir(myList[i])
+            print("Succesfully created the folder -", myList[i],"\n")
+        except FileExistsError:
+            print("Folder",myList[i]," already exists...","\n")
