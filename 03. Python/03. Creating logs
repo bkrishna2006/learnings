@@ -1,0 +1,31 @@
+def myWriteLogs(t_myRawFile,t_percent,t_mainPgmStart,t_mainPgmEnd,t_iteration):
+    import time,g,os
+    print("Main program Execution ended...",t_mainPgmEnd,"\n")
+    time.sleep(g.sleeptime)
+    
+    mainPgmExecTime = t_mainPgmEnd - t_mainPgmStart
+    print("Main program Execution time: ", mainPgmExecTime,"\n")
+    time.sleep(g.sleeptime)
+    
+    os.chdir(g.logFolder)
+    import io
+    
+    if os.path.exists("ExecutionLogs.txt"):
+ 
+        with io.open("ExecutionLogs.txt",'a+') as fw:
+            fw.write("Uploaded File: %s " % t_myRawFile)
+            fw.write("Summary Prcnt: %d " % t_percent)
+            fw.write("Iteration: %d " % t_iteration)
+            fw.write("Pgm start: %s " % t_mainPgmStart)
+            fw.write(" Pgm finish: %s " % t_mainPgmEnd)
+            fw.write(" duration: %s \n" % mainPgmExecTime)
+    else:
+         with io.open("ExecutionLogs.txt",'w+') as fw:
+            fw.write("Uploaded File: %s " % t_myRawFile)
+            fw.write("Summary Prcnt: %d " % t_percent)
+            fw.write("Iteration: %d " % t_iteration)
+            fw.write("Pgm start: %s " % t_mainPgmStart)
+            fw.write("Pgm finish: %s " % t_mainPgmEnd)
+            fw.write(" duration: %s \n" % mainPgmExecTime)
+             
+    print("Execution Finished Sucessfully... Refer log at: ", g.logFolder )
