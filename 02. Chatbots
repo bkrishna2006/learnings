@@ -1,0 +1,51 @@
+Task based Dialog Systems / Conversational Agents & Chatbots
+
+Task based Dialog Agents 
+	-	Meant for specific tasks
+	-	Short Conversations
+	-	Usually limited turns (5-8)
+	-	Are important as an interface to Robots
+	-	Example - DoNotPay
+	-	Modern dialog agents are domain Ontology based
+		-	Frames (eg. Flight booking, Car booking,  and Slots (flight - origin, destination, arrival date & time, departure date & time)
+	-	Architectures	
+		1. GUS Architecture (Frame based); (used in Apple's Siri, Gooogle Assistant and Amazon's Alexa)
+			-	Production Rule system (having capability to dynamically switch between different frames)
+			-	Can have condition-action rules attached to slots (like if Destination City "slot" is filled in flight booking frame, 
+				the stay location city slot in hotel booking frame can be automatically populated)
+			-	Can add generic frames (like to answer questions like distance btwn two cities, which all airlines fly between 2 specific cities etc)
+			-	Can add rules to answer questions from a list ("find restaurants near me")
+			-	VoiceXML (industrial instantiation of the Architecture)
+		2. Finite State Automaton Architecture (aka Finite State Control Architecture)
+
+Key words - Mixed initiative or System initiative, Production Rule, Turing tests
+	
+Chatbots 
+
+Chatbots are systems that can carry on extended conversations with the goal of
+mimicking the unstructured conversational or ‘chats’ characteristic of human-human
+interaction,
+
+	- 	Can have multiple/unlimited turns
+	-	Long/Extended Casual conversations
+	-	Usually has some entertainment value.
+	-	Example - Microsoft’s XiaoIce, ELIZA (Weizenbaum) used in Psychological Counseling, ALICE
+	-	Applications - Travel Planning & Management, Automatic Tutoring, 
+Chatbot Architectures
+	
+	1. Rule based
+		1. Include the old ELIZA system (1966)
+		2. PARRY system.
+	2. Corpus based - Based on large datasets and done by (a.k.a Response Generation Systems)
+		1. Information Retrieval Systems (IR based) 
+			(copy a human’s response from a previous conversation)
+		2. Machine translation paradigms (machine learned sequential transduction system)
+			1. Neural Network sequence-to-sequence systems
+			(learn to map from a user utterance to a system response)
+		- Like rule-based chatbots, Corpus based Chatbots very rarely build models.
+		-	Instead, Corpus based chatbots focus on generating a single response turn.
+		-	Ressemble Q&A systems
+	2. Information Retrieval (IR based)
+		Example - Cleverbot (2017), Microsoft's XiaoIce(2014)
+	3. Transductional model
+	4. Frame based dialog systems
