@@ -1,0 +1,223 @@
+Working of Primary and Secondary Namenodes
+http://ilpce/ce/Course/HDP/page/49
+
+1.	Hadoop framework - components – 
+	1.	HDFS (storage layer), 
+	2. 	YARN (Resource Management), 
+	3.	MapReduce (Application layer)
+2.	In HDFS, 
+	1. Records are always appended and cannot be updated.
+	2. File writing is done sequentially, block after block.
+	3. File reading is also done sequentially, block after block.
+3.	In Hadoop, the program goes upto the node to process the data in that node.
+4.	Default replication factor is 3
+5.	Namenode contains metadata
+6.	The responsibility of replication of the data lies with the Datanode and not the Namenode
+7.	HDFS block size – 64 MB or 128 MB
+8.	Masternode and Slave/Datanode are terms for physical nodes
+9.	Namenode & Datanode are the daemon services running on Masternode and Slave/Datanode respectively.
+10.	Fsimage and edits are the 2 sets of files used by NameNode to maintain the namespace.
+11.	SPOF – Single point of failure
+12.	Hadoop High Availability supported from Hadoop 2.2 onwards
+13.	Active and Passive Namenodes
+MapReduce
+1.	MapReduce is the programming model in Hadoop for processing the data
+2.	Map phase has the logic to perform the data operation and the Reduce phase has the logic to perform the aggregation on the various outputs
+3.	MapReduce works on key value pair concept
+4.	2 daemon services – Jobtracker and Tasktracker
+YARN (YetAnother Resource Negotiator)
+1.	ResourceManagement  (Compute)
+2.	Resources in YARN Architecture are referred to as Containers
+3.	1 Container = 1 Core & 1 RAM (can be configured differently as well)
+4.	2 daemon services – 
+5.	3 main components of YARN - 
+		1. 	Node Manager, 
+		2.	Resource Manager and 
+		3.	ApplicationMaster
+
+
+1.	HBase: (for Data Storage) It is a type of columnar store that allows random access to structured data in HDFS.
+2. 	Hive:  (for Data processing)It allows us to run SQL like queries on data stored in HDFS.
+3.	Pig: It provides a platform to analyze large datasets with a data flow language(Pig Latin)
+4. 	Mahout: It is a framework, that allows machine learning algorithms to be run on Hadoop.
+5.	Sqoop: (for Data Migration) It is a tool to migrate data from an RDBMS system to HDFS and vice-versa
+6.	Flume: (a data collector, that pushes data from one point to another(E.g.: Used to push data real time into HDFS)
+7.	Zookeeper: (for Data Orchestration) It is a centralized service for maintaining configuration information, naming, providing distributed synchronization,
+	and group services.
+8.	Oozie: It is a workflow scheduler system to manage Hadoop jobs.
+9.	Ambari: (for Data Monitoring) It provides an easy-to-use Hadoop management Web UI. The tool features a management dashboard that keeps track of cluster 
+	health and can help diagnose performance issues.
+  
+
+Execution modes of Hadoop
+
+1.	Local/Stand-alone mode – suitable for running mapReduce jobs during Dev and Testing
+	a.	No daemon processes, everything running in single JVM
+	b.	
+2.	Pseudo distributed mode – 
+	a.	n this mode, all the Hadoop daemons run on a single machine in separate JVMs, simulating a cluster like environment on a small scale. 
+	It is useful for development and training purposes. Here, we need to update all the configuration files (core-site.xml, hdfs-site.xml, mapred-site.xml 
+	and yarn-site.xml)
+ 
+3.	Fully distributed mode
+	In this mode, the Hadoop daemons are run across a cluster of machines. Here, the configuration files need to updated on all machines.
+
+Common Installation steps in Hadoop
+
+Java Installation:
+
+The first step into Hadoop installation is Java. Ensure that you have installed a suitable version of Java on your machine based on your Hadoop version. 
+Here , we are using Hadoop 2.6.0 and JDK 1.7
+
+Steps for Java installation:
+1.	Download JDK 1.7 tarball
+2.	Assuming that the downloaded tarball is present in the user’s home directory, unpack the JDK using the following command
+	~$tar -xvf jdk-7u79-linux-x86_64.gz
+3.	To check the installation of Java with correct version, use the command,                     
+	~$java -version
+
+Hadoop Installation:
+1. Download a stable release of Hadoop, which is a packaged gzipped tar file from Apache Hadoop releases page https://hadoop.apache.org/releases.html
+2. Unpack the tar file anywhere in the file system using the following command
+	~$ tar –xvf hadoop-2.6.0.tar.gz
+3. To indicate the location of Java to Hadoop, we need to provide JDK file path to Hadoop. This can be done in two ways
+	1. Set the JAVA_HOME environment variable in .bashrc file,
+		~$vi .bashrc
+			export JAVA_HOME=<JDK file path>
+			export PATH = $PATH:$JAVA_HOME/bin
+ 
+2. Or, we can point the Java installation that Hadoop must use, by updating JAVA_HOME in conf/hadoop-env.sh
+   -Update .bashrc file with Hadoop environment variables to point to Hadoop installation
+		~$vi .bashrc
+			export HADOOP_HOME = <hadoop file path>
+			export HADOOP_PREFIX = ${HADOOP_HOME}
+			export HADOOP_CONF_DIR = ${HADOOP_PREFIX}/etc/hadoop
+			export PATH = $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+   To save and close the file use SHIFT key +ZZ.
+
+3. Now, source the file or execute it, for these variables to be set in the current shell.
+   ~$ source .bashrc
+4. Check whether the changes have been applied
+   ~$ hadoop version
+   ~$ ECHO $HADOOP_HOME
+
+Configuration properties of Hadoop
+
+To run Hadoop in a particular mode, we need to do two things,
+1.	Update the configuration files accordingly and set appropriate properties.
+2.	Start Hadoop daemons.
+The minimal set of properties to be configured in each mode is given below
+
+
+HDFS Shell commands
+
+In Hadoop File operations are performed using HDFS commands.
+The format of a shell command is given by
+    $bin/hadoop fs <args> or
+	$bin/hdfs dfs <args>
+<args>  is the URI in the form scheme://authority/path.
+
+HDFS commands support most of the normal file system operations and HDFS specific operations.
+•	List of commands can be obtained with
+    $bin/hadoop fs –help or hdfs dfs -help 
+•	Help on any command can be obtained with 
+    $bin/hadoop fs -help <<command-name>> or hdfs dfs <<command-name>> 
+•	HDFS Administration operations can be issued with                  
+    $ bin/hadoop dfsadmin 
+
+ls
+This command returns statistics on files and directories in HDFS.
+	Usage : 	hadoop dfs  -ls  <args>
+	Example: 	hadoop fs –ls  /username
+
+lsr
+This command is a recursive version of “ls” command. It returns the statistics of files, directories and files inside directories.
+
+	Usage :  hadoop dfs  -lsr  <args>
+	Example: hadoop dfs -lsr    /user
+
+mkdir
+This command creates directories in HDFS (same as in any UNIX OS)
+	Usage: hadoop fs -mkdir [-p] <paths>
+ 
+With -p the behavior it is much like unix mkdir -p creating parent directories along the path.
+	Example:hadoop fs  -mkdir /username/dir1
+
+put
+It copies files or directories from local file system to hdfs. It is similar to “copyFromLocal” command.
+
+	Usage: 	 hadoop fs –put <local-src> … <hdfs-dest>
+	Example: hadoop fs –put    /users/localuser/file1  /users/hadoopuser/
+ 
+copyFromLocal
+•	Copies files or directories from local files system to Hadoop file system
+	Usage: hadoop fs –copyFromLocal <local-src> <hdfs-dest>
+	Not useful in reading from ‘stdin’
+
+	Example: hadoop fs –copyFromLocal /users/hadoopuser/localfile1 /users/hadoopuser/
+
+get
+–Copies files or directories from HDFS files system to local file system
+	Usage: hadoop fs –get [-crc] <hdfs-src> <local-dest>
+	crc (Cyclic redundancy check) optional  - useful in copying the crc also
+	Example: hadoop fs –get /users/hadoopuser/hdfsfile1 /users/localuser/
+
+copyToLocal
+•	Similar to get  command
+	Usage: hadoop fs –copyToLocal <hdfs-src> <local-dest>
+	Example:hadoop fs –copyToLocal  /users/hadoopuser/hdfsfile1 /users/localuser/
+
+cat
+This command prints the contents of given file in HDFS.
+	Usage: hadoop fs –cat <hadoopfile>
+	Example: hadoop fs –cat /users/hadoopuser/hdfsfile1.txt
+
+cp
+It is used to copy files between hdfs directories. ”mv” command can be used to move instead of copying as well.
+	Usage :   hadoop fs –cp <hdfsfile1> <hadoopdir>
+	Example : hadoop fs –cp /users/hadoopuser/hdfsfile1 /users/hadoopuser/hadoopdir/
+
+rm
+It removes files or directory from hdfs. But the directory needs to be empty first to use this command.
+“rmr” command is the recursive version of rm. This can be used to delete even a non empty directory.
+	Usage : hadoop fs –rm <hadoopfile>
+    hadoop fs –rmr <hadoopdir>
+	Example : hadoop fs –rm /users/hadoopuser/hadoopfile.txt
+
+chmod
+
+It is used to change the permissions of the file or directories in hdfs
+-R is used for changing permissions recursively through the directory structure
+<mode> can be symbolic or octal mode.
+	Usage : hadoop fs –chmod [-R] <mode> <hadoopfile_or_dir>
+	Example : hadoop fs –chmod 700 /users/hadoopuser/hadoopdir/hadoopfile
+In the above example, we are giving all permissions(read, write, execute) to the file owner and no permissions to group and others.
+
+dfsadmin -report
+This commands list the basic statistics of HDFS.
+	Usage : hadoop dfsadmin -report
+
+help
+This gives help information on a command
+	Usage : hadoop fs –help <command>
+	Example : hadoop fs –help ls
+
+Hadoop WebUI
+Hadoop provides a default WebUI that allows us to monitor all hadoop services and manage the cluster. The syntax to access the webUI is
+http://hostname:portnumber/
+
+Port numbers can be configured. Some default port numbers of Hadoop services include,
+
+NameNode: 50070
+DataNode: 50075
+ResourceManager: 8088
+Job History server: 19888
+
+Course References
+http://www.cloudera.com/content/dam/cloudera/Resources/PDF/whitepaper/10_Common_Hadoopable_Problems.pdf?bcsi_scan_94a977aee9df674a=0&bcsi_scan_filename=10_Common_Hadoopable_Problems.pdf
+https://www.youtube.com/watch?v=d2xeNpfzsYI
+http://www.metascale.com/big-data-use-case-for-healthcare.html
+http://hadoopilluminated.com/hadoop_illuminated/Hadoop_Use_Cases.html#d1575e1333
+https://hadoop.apache.org/
+http://marketrealist.com/2014/07/overview-big-data/
+Book: Hadoop -The Definitive Guide by Tom White
