@@ -1,0 +1,284 @@
+def mySaveFile(loc,t_filename):
+    import os, time
+    print("Inside the mySaveFile()) function of preProcessing program",'\n')
+    time.sleep(g.sleeptime)
+#    t_filename = fileObject.filename
+    
+    os.chdir(loc)
+    if os.path.exists(t_filename):
+        print("File exists... proceeding to overwrite","\n")
+        os.remove(t_filename)
+    else:
+        print("File does not exist; hence creating...","\n")
+        time.sleep(g.sleeptime)
+        t_filename.save(t_filename)
+            
+#   file.save(os.path.join(loc,'/', filename))
+    print(t_filename, " saved to the Directory: ", os.getcwd(), "\n")
+    time.sleep(g.sleeptime)    
+    
+def myReadFile(loc,file,encoder):
+#    print("Inside the myReadFile()) function of preProcessing program",'\n')
+    print("Reading the Corpora...","\n")
+    import os, time  
+    os.chdir(loc)
+    print("Current Working Directory: ", "\n")    
+    print(os.getcwd())
+    # Using NLTK's corpus functions to load the corpus.
+    print("Corpora read:", file, "\n")
+    time.sleep(g.sleeptime)  
+
+#   myNewCorpus = PlaintextCorpusReader(trainFolder, testfile, encoding='latin-1')   
+    from nltk.corpus.reader.plaintext import PlaintextCorpusReader
+    myNewCorpus = PlaintextCorpusReader(loc, file, encoding=encoder)   
+    myCleanFile = myNewCorpus.raw().strip()
+    return myCleanFile
+#   return myNewCorpus
+
+def myConvToLower(file):
+#    print("Inside the myConvToLower()) function of preProcessing program",'\n')
+    print("Converting to lower case...","\n")
+    import time
+    time.sleep(g.sleeptime)
+#    myCleanFile = myCleanFile.lower()
+#    return myCleanFile
+    myCleanFile = file.lower()
+    return myCleanFile
+
+def myReplPatterns(file, fromPattern, toPattern):    
+#    import re
+#    print("Inside the myReplPatterns()) function of preProcessing program",'\n')
+    print("Replacing patterns as specified...","\n")
+    import time
+    time.sleep(g.sleeptime)
+#    myCleanFile = myCleanFile.replace('\\n','')  # to replace new line representation
+    myCleanFile = file.replace(fromPattern,toPattern)  # to replace the pattern 
+    return myCleanFile
+
+def myReplContr(file,lookupFile,loc):
+#    print("Inside the myReplContr() function of preProcessing program",'\n')
+    import time
+    time.sleep(g.sleeptime)
+    # Replacing contractions with expanded words..
+    contractions = {}
+    import os
+    os.chdir(loc)
+    with open(lookupFile,'r') as f:
+        for line in f:
+            items = line.split()
+            key, values = items[0], ' '.join(items[1:])
+            contractions[key] = values
+    print("Replacing contractions...", "\n")   
+    myCleanFile = ' '.join(str(contractions.get(word, word)) for word in file.split())
+    return(myCleanFile)      
+    
+def myRemNbrs(file):
+    import re
+#    print("Inside the myRemNbrs() function of preProcessing program",'\n')    
+    print("Removing numbers...","\n")
+    import time
+    time.sleep(g.sleeptime)
+#    time.sleep(g.sleeptime)
+    myRemNumSet = "[0-9]"
+    myCleanFile = re.sub(myRemNumSet," ",file.strip())
+    return(myCleanFile)
+    
+def myRemSymb(file,lookupFile,loc):
+    import re
+    import os
+    os.chdir(loc)
+#    print("Inside the myRemSymb() function of preProcessing program",'\n')    
+    print("Removing Symbols...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    with open(lookupFile, "r") as f:
+        myRemSymbSet = f.readline()
+    myCleanFile = re.sub(myRemSymbSet," ",file.strip())
+    return(myCleanFile)
+    
+def myRemNonASCII(file,lookupFile,loc):
+    import re
+    import os
+    os.chdir(loc)
+#    print("Inside the myRemNonASCII() function of preProcessing program",'\n')    
+    print("Replacing non-ASCII...","\n")
+    import time
+    time.sleep(g.sleeptime)    
+    with open(lookupFile, "r") as f:
+        myRemNonASCIISet = f.readline()
+    myCleanFile = re.sub(myRemNonASCIISet," ",file.strip())
+    return(myCleanFile)
+    
+def myReplTinyWords(file):
+#    print("Inside the myReplTinyWords() function of preProcessing program",'\n')    
+    print("Replacing single letter words other than 'a','i'...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    myCleanFile = ' '.join( [w for w in file.split() if (len(w)>1 or (w == 'a') or (w =='I'))] )
+    return(myCleanFile)
+
+def myRemProfaneWords(file,lookupFile,loc):
+#    print("Inside the myRemProfaneWords() function of preProcessing program",'\n')    
+    print("Removing Profane or badwords...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    import os
+    os.chdir(loc)
+    with open(lookupFile, 'r') as f:
+        profWord=f.read().replace('\n', ' ')
+    profWordList = profWord.lower().split()
+    myCleanFile = ' '.join(filter(lambda x: x.lower() not in profWordList,  file.lower().split()))
+    return(myCleanFile)
+
+def myRemStopWords(file):
+#    print("Inside the myRemStopWords() function of preProcessing program",'\n')    
+    print("Removing English stop words like for, and, of etc...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.corpus import stopwords # Import the stop word list
+    stopWords = set(stopwords.words("english")) 
+#    myCleanFile = [w for w in file if not w in stopWords] 
+    myCleanFile = ' '.join( [w for w in file.split() if not w in stopWords]) 
+    return(myCleanFile)
+
+def myLemmatize(file):
+#    print("Inside the myLemmatize() function of preProcessing program",'\n')    
+    print("Lemmatizing...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.stem import WordNetLemmatizer
+    # nltk.download('wordnet')     #one time activity
+    lemmatizer = WordNetLemmatizer()
+    myCleanFile = ' '.join([lemmatizer.lemmatize(word) for word in file.split()])
+    return(myCleanFile)
+    
+def myStemming(file):
+#    print("Inside the myStemming() function of preProcessing program",'\n')    
+    print("Stemming...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.stem.snowball import SnowballStemmer
+    stemmer = SnowballStemmer("english")
+    myCleanFile = ' '.join([stemmer.stem(word) for word in file.split()])
+    return(myCleanFile)
+    
+def myWordTokenize(file):
+    #Creating word tokens
+    print("Creating word tokens...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.tokenize import word_tokenize
+    myWordTokens = word_tokenize(str(file))
+    return(myWordTokens)
+    
+def myNgramsCreate(wordTokens):
+    #Creating n-grams using NLTK...
+    print("Creating ngrams using NLTK...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.util import ngrams
+    bigrams = ngrams(wordTokens, 2)
+    trigrams = ngrams(wordTokens, 3)
+    quadgrams = ngrams(wordTokens, 4)
+    pentagrams = ngrams(wordTokens, 5)
+    return(bigrams, trigrams, quadgrams,pentagrams)
+    
+def mySentTokenize(file):
+    #Creating Sentence tokens
+    print("Creating Sentence tokens...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    from nltk.tokenize import sent_tokenize
+    mySentTokens = sent_tokenize(str(file))
+    return(mySentTokens)
+
+def myConvertToDF(t_Tokens):
+    print("Converting tokens to DF format...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    import pandas as pd
+    df=pd.DataFrame(t_Tokens)
+    df.columns = ['Values']
+    df.columns.tolist()
+    df=df.dropna(subset=['Values'])
+    return(df)
+    
+def myRemoveExtraSpaces(file):
+    print("Converting tokens to DF format...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    file = ' '.join( [w for w in file.split()] )
+    return(file)
+    
+def myRemLowFreqWords(t_tokens,min_count):
+    # remove all words that don't occur at least 5 times and then stem the resulting docs
+    print("Removing low freq items(words/sentences as needed)...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    import pandas as pd
+    import itertools
+    df=pd.DataFrame(t_tokens)
+    df.columns = ['Values']  
+    
+    pd.options.mode.chained_assignment = None  # Setting exception handling. default='warn'
+    from collections import Counter
+    str_freq = pd.DataFrame(list(Counter(filter(None,list(itertools.chain(*df['Values'].str.split(' '))))).items()),columns=['word','count'])
+    low_freq_words = set(str_freq[str_freq['count'] < min_count]['word'])
+    df['Trimmed'] = [' '.join(filter(None,filter(lambda word: word not in low_freq_words, line))) for line in df['Values'].str.split(' ')]
+    #texts_stemmed = list(filter(None, [next_text.strip(' ').split(' ') for next_text in df['stemmed_text_data']]))
+    SentenceListTrimmed = list(filter(None, [next_text.strip(' ').split(' ') for next_text in df['Trimmed']]))
+#    myCleanFile = ' '.join(str(texts_stemmed))
+    return(SentenceListTrimmed)
+    
+def myCreateLists (t_mySentenceTokens,t_myCleanFile,t_minimum_count): 
+    print("Creating Sentence and Document lists...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    import pandas as pd
+    # Identifying low freq words *****************
+        # remove all words that don't occur at least 5 times and then stem the resulting docs
+    print("Removing low freq items(words/sentences as needed)and then trimming the resulting docs...","\n")
+    import time
+    time.sleep(g.sleeptime)
+    import itertools
+    SentenceDF=pd.DataFrame(t_mySentenceTokens)
+    SentenceDF.columns = ['Values']  
+    
+    pd.options.mode.chained_assignment = None  # Setting exception handling. default='warn'
+    from collections import Counter
+    str_freq = pd.DataFrame(list(Counter(filter(None,list(itertools.chain(*SentenceDF['Values'].str.split(' '))))).items()),columns=['word','count'])
+    low_freq_words = set(str_freq[str_freq['count'] < t_minimum_count]['word'])
+    
+    # Creating Sentencelist **********************
+    # remove all words that don't occur at least "t_minimum_count" times...
+    SentenceDF['Trimmed'] = [' '.join(filter(None,filter(lambda word: word not in low_freq_words, line))) for line in SentenceDF['Values'].str.split(' ')]
+    SentenceList = list(filter(None, [next_text.strip(' ').split(' ') for next_text in SentenceDF['Trimmed']]))
+    
+    # Creating Documentlist **********************
+    DocumentDF=pd.DataFrame({'text':t_myCleanFile},index=[1])
+    DocumentDF["Trimmed"] = [' '.join(filter(None,filter(lambda word: word, line))) for line in DocumentDF["text"].str.split(' ')]        
+    # remove all words that don't occur at least "t_minimum_count" times...
+    DocumentDF['Trimmed'] = [' '.join(filter(None,filter(lambda word: word not in low_freq_words, line))) for line in DocumentDF['Trimmed'].str.split(' ')]
+    DocumentList = list(filter(None, [next_text.strip(' ').split(' ') for next_text in DocumentDF['Trimmed']]))
+    
+    return SentenceList,DocumentList
+
+def myPickleDump(obj,loc):
+    import time
+    print("Dumping the object as a pickle to the specified location...","\n")
+    time.sleep(g.sleeptime)
+    import os, pickle
+    os.chdir(loc)
+    objName = obj
+    with open(objName, 'ab') as fp:
+        pickle.dump(obj, fp)
+        
+def myPickleLoad(obj,loc):
+    import time
+    print("Dumping the object as a pickle to the specified location...","\n")
+    time.sleep(g.sleeptime)
+    import os, pickle
+    os.chdir(loc)
+    with open(obj, 'rb') as fp:
+        pickle.load(obj, fp)
+   
