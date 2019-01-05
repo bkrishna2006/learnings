@@ -1,0 +1,57 @@
+import flask
+from flask import render_template, request, redirect, url_for, flash
+
+import time, os
+import main,g
+
+app = flask.Flask(__name__)
+
+@app.route('/index', methods=['GET'])
+def index():
+    print("Inside home() view:  Request method is :", request.method)
+    return render_template('index.html')
+
+@app.route('/summarize', methods=['GET', 'POST'])
+def summarize():
+    print("Inside summarize() view:  Request method is :", request.method, "\n")
+    time.sleep(g.sleeptime)
+    if request.method == 'POST':
+        uploadedFile=request.files['uFile']
+        if uploadedFile.filename == '':
+            flash('No selected file')
+            return redirect(url_for('index'))
+        else:
+            iteration = g.iteration + 1  # Updating the log variable every time a new file is uploaded    
+            uploadLoc = g.rawFolder
+            os.chdir(uploadLoc)
+            global myRawFile
+            myRawFile = uploadedFile.filename
+            print("Uploded file is: ", myRawFile, "\n")
+            uploadedFile.save(myRawFile)
+    print("Uploaded file: ", myRawFile, " is saved to - ", uploadLoc, "\n" )
+    time.sleep(g.sleeptime)  
+    percent = int(request.form['percent'])
+    print('Percentage set for extractive summarization : ',percent, "\n")
+    time.sleep(g.sleeptime)  
+    '''
+    text = str(uploadedFile.read())
+    textEncoded = str(text.encode('utf-8'))
+    return render_template('summary.html', summary=main.myMain(textEncoded, percent,myRawFile,g.rawFolder))
+    main.myMain("Toyota.txt",rawFolder,10)
+    '''    
+#   Starting with loading of pre-processed corpora and trained models
+#    import mainPart2
+#   return render_template('summary.html', summary=mainPart2.myMain(myRawFile,uploadLoc,percent))
+
+#   End to end execution
+    import main
+    return render_template('summary.html', summary = main.myMain(myRawFile,uploadLoc,percent,iteration))
+#
+    '''
+#   Execution from loading of pre-processed corpora and trained models
+    import mainPart2
+    return render_template('summary.html', summary = mainPart2.myMain(myRawFile,uploadLoc,percent,iteration))
+    '''
+if __name__ == "__main__":
+    app.run(debug=True)
+    app.secret_key = b'##'  # 10 digit key can contain symbols, alphanumerics
