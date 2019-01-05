@@ -1,0 +1,95 @@
+import g
+def mySaveObjects(t_myCleanFile_Txt,t_myWord_Tokens,t_mySentence_Tokens,t_myWords_DF, t_mySentence_DF,t_mySentence_List,t_myDocument_List):
+    ''' 
+    Syntax
+    import pickle
+    object = Object()
+    filehandler = open(filename, 'w')
+    pickle.dump(object, filehandler)
+    '''
+    import time
+    print("Creating pickles of various objects...", "\n")
+    time.sleep(g.sleeptime)
+    import pickle, os
+    os.chdir(g.genFolder)
+    
+# Defining handlers for each object
+    
+    pkl_myCleanFile_Txt_hndlr = open("pkl_myCleanFile_Txt", 'wb')
+    pkl_myWord_Tokens_hndlr = open("pkl_myWord_Tokens",'wb')
+    pkl_mySentence_Tokens_hndlr = open("pkl_mySentence_Tokens",'wb')
+    pkl_myWords_DF_hndlr =open("pkl_myWords_DF", 'wb')
+    pkl_mySentence_DF_hndlr =open("pkl_mySentence_DF", 'wb')    
+    pkl_mySentence_List_hndlr = open("pkl_mySentence_List", 'wb')
+    pkl_myDocument_List_hndlr = open("pkl_myDocument_List", 'wb')
+    
+# Writing the pickles   
+
+    pickle.dump(t_myCleanFile_Txt, pkl_myCleanFile_Txt_hndlr)
+    pkl_myCleanFile_Txt_hndlr.close()
+    
+    pickle.dump(t_myWord_Tokens,pkl_myWord_Tokens_hndlr)
+    pkl_myWord_Tokens_hndlr.close()
+    
+#    pickle.dump(myNgrams,pkl_myNgrams)
+#    pkl_myNgrams.close()
+    
+    pickle.dump(t_mySentence_Tokens,pkl_mySentence_Tokens_hndlr)
+    pkl_mySentence_Tokens_hndlr.close()
+    
+    pickle.dump(t_myWords_DF, pkl_myWords_DF_hndlr)
+    pkl_myWords_DF_hndlr.close()
+    
+    pickle.dump(t_mySentence_DF, pkl_mySentence_DF_hndlr)
+    pkl_mySentence_DF_hndlr.close()
+ 
+    pickle.dump(t_mySentence_List,pkl_mySentence_List_hndlr)
+    pkl_mySentence_List_hndlr.close()
+    
+    pickle.dump(t_myDocument_List,pkl_myDocument_List_hndlr)
+    pkl_myDocument_List_hndlr.close()
+    
+def myLoadSavedObjects():
+    import pickle, os
+    import time
+    
+    print("Loading objects from the saved pickles...", "\n")
+    time.sleep(g.sleeptime)
+    
+    os.chdir(g.genFolder)
+    
+# Defining handlers for each object
+    pkl_myCleanFile_Txt_hndlr = open("pkl_myCleanFile_Txt", 'rb')
+    pkl_myWord_Tokens_hndlr = open("pkl_myWord_Tokens",'rb')
+    pkl_mySentence_Tokens_hndlr = open("pkl_mySentence_Tokens",'rb')
+    pkl_myWords_DF_hndlr =open("pkl_myWords_DF", 'rb')
+    pkl_mySentence_DF_hndlr =open("pkl_mySentence_DF", 'rb')
+    pkl_mySentence_List_hndlr = open("pkl_mySentence_List", 'rb')
+    pkl_myDocument_List_hndlr = open("pkl_myDocument_List", 'rb')
+    
+# Loading the pickles   
+    myCleanFile = pickle.load(pkl_myCleanFile_Txt_hndlr)
+    pkl_myCleanFile_Txt_hndlr.close()
+    
+    myWordTokens = pickle.load(pkl_myWord_Tokens_hndlr)
+    pkl_myWord_Tokens_hndlr.close()
+    
+#    myNgrams = pickle.load(pkl_myNgrams)
+#    pkl_myNgrams.close()
+    
+    mySentenceTokens = pickle.load(pkl_mySentence_Tokens_hndlr)
+    pkl_mySentence_Tokens_hndlr.close()
+     
+    myWordsDF = pickle.load(pkl_myWords_DF_hndlr)
+    pkl_myWords_DF_hndlr.close()
+    
+    mySentenceDF = pickle.load(pkl_mySentence_DF_hndlr)
+    pkl_mySentence_DF_hndlr.close()
+    
+    mySentenceList = pickle.load(pkl_mySentence_List_hndlr)
+    pkl_mySentence_List_hndlr.close()
+    
+    myDocumentList = pickle.load(pkl_myDocument_List_hndlr)
+    pkl_myDocument_List_hndlr.close()
+      
+    return(myCleanFile,myWordTokens,mySentenceTokens,myWordsDF,mySentenceDF,mySentenceList, myDocumentList)
